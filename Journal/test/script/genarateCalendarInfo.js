@@ -5,7 +5,7 @@
  * if Thursday is in pervious year, like 2016/1/1, then the first week is start from 2016/1/4 (start from Monday)
  */ 
 
-
+const fs = require("fs");
 let Month = [
     { id: 0, month: "Jan", startFrom: 1, endTo: 31 },
     { id: 1, month: "Feb", startFrom: 1, endTo: 28 },
@@ -23,37 +23,53 @@ let Month = [
 
 let output = [];
 
-
+genarateDate(2020);
 function isLeap ( year ) {
 // TODO: complete the function
+// 1. 能被 4 整除 且 不能被 100 整除
+// 2. 能被 400 整除
+// 满足 1，2 两点的为闰年
+    return Boolean( !( year % 4 ) && ( year % 100) ) || Boolean( !( year % 400 ) );
 }
 
 function genarateDate ( year ) {
+
+    // Need to update since getWeek modified
     let firstDay = year + "/01/01",
-        firstDayInfo = calculateDayInfo( firstDay );
+        firstDayWeek = getWeek( firstDay ),
+        firstDayInfo = new Date( firstDay ),
+        dayInfo = firstDayInfo.getDay();
 
     Month[1].endTo = isLeap( year ) ? Month[1].endTo + 1 : Month[1].endTo;
 
     
     Month.forEach(( month ) => {
-        for (let i = month.startFrom; i <= endTo; i++) {
-            let dayCount = output.length(),
-                day = dayCount % 7 + firstDayInfo.day,
-                week = dayCount ? ( day === 1? output[ dayCount - 1] + 1 : output[ dayCount - 1]) : 1;
-            if( dayCount < 4 && ![1, 2, 3, 4].includes( day )) {
-                week = firstDayInfo.week;
+        for (let i = month.startFrom; i <= month.endTo; i++) {
+            let dayCount = output.length,
+                day = (dayCount + dayInfo) % 7,
+                week = 0;
+            if( dayCount < 3 && ![1, 2, 3, 4].includes( day )) {
+                week = firstDayWeek.week;
+            } else if ( dayCount === 3 ) {
+                week = 1;
+            } else {
+                week = dayCount  ? ( day === 1? output[ dayCount - 1].week + 1 : output[ dayCount - 1].week) : 1;
             }
-            
 
             output.push( { 
                 year: year, 
                 month: month.id, 
                 week: week,
                 date: i, 
-                day: day
+                day: day,
+                dayCount: dayCount + 1 // start from day 1
             } )
         }
-    })
+    });
+    
+    fs.writeFileSync("./test/mockCalendarDate_" + year + ".json", JSON.stringify( output ));
+    //let ws = fs.createWriteStream( "./test/mockCalendarDate_" + year + ".js" );
+    //ws.write( output );
 
 }
 
@@ -64,19 +80,27 @@ function genarateDate ( year ) {
  * 
  * @returns the week number
  */
-function calculateDayInfo( date ) {
-    let currThur = getThursdayDate( date ),
-        fullYear = new Date( currThur ).getFullYear(),
+function getWeek( date ) {
+    let thur = getThursdayDate( date ),
+        fullYear = new Date( thur ).getFullYear(),
         timeObj = new Date( fullYear + "/01/01" ),
-        month = timeObj.getMonth(),
         day = timeObj.getDay(),
-        date = timeObj.getDate();
+        timestamp = new Date( date ).getTime();
 
     let firstWeekTimeStamp = 0;
+    if ([1, 2, 3, 4].includes( day )) {
+        firstWeekTimeStamp = (timeObj.getTime()) - (day * 24 * 3600000 );
+    } else {
+        let num = day > 0 ? 8 : 1;
+        firstWeekTimeStamp = ( timeObj.getTime() ) + ( num - day ) * 24 * 3600000;
+    }
 
-    // TODO: complete the function
-
-    return { year: fullYear, month: month, week: weekNum, date: date, day: day };
+    if ( timestamp >= firstWeekTimeStamp ) {
+        let num = Math.ceil(( timestamp - firstWeekTimeStamp ) / 7 / 24 / 3600000 );
+        return { year: fullYear, week: num };
+    } else {
+        return this.getWeek( (fullYear - 1 ) + "/12/28")
+    }
 }
 
 /**
