@@ -34,7 +34,7 @@ class Year extends React.Component {
 
     render() {
         return (
-            <div style={{display:"flex"}}>
+            <div style={{"display":"flex", "flexWrap":"wrap", "height":"100%"}}>
                 {
                     Object.keys( this.state.CalendarInfo ).map( ( index ) => {
                         return  <SingleMonthInYear key={index} month={this.state.CalendarInfo[index]} monthId={index}></SingleMonthInYear>

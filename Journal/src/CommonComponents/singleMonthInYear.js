@@ -1,14 +1,16 @@
 import React from 'react'
+import Enum from '../Services/enums'
 
 const SingleMonthInYear = ( props ) => {
     console.log(props)
     return (
-        <div>
-            {props.monthId}
+        <div style={{width: "25%", height:"20%","margin":"0 auto 0 auto"}}>
+            {Enum.MonthIdMap[props.monthId]}
+
             <table>
                 <tbody>
                     <tr>
-                        <th></th>
+                        <th style={{"paddingRight": "15px"}}></th>
                         <th>M</th>
                         <th>T</th>
                         <th>W</th>
@@ -18,20 +20,20 @@ const SingleMonthInYear = ( props ) => {
                         <th>S</th>
                     </tr>
                     {
-                        props.month.map( (week) => {
-                            return <tr>
-                                <th>{week.days[0].week}</th>
+                        props.month.map(  (week, index ) => {
+                            return <tr key={index}>
+                                <th key={index} style={{"paddingRight": "15px"}}>{week.days[0].week}</th>
                                 {
-                                    week.days.map( day => {
+                                    week.days.map( (day) => {
                                         if(day.date === 1) {
                                             let item = [];
                                             for( let i = 1; i < day.day; i++) {
-                                                item.push(<th></th>)
+                                                item.push(<td key={index.toString() + week.week.toString() + i.toString()}></td>)
                                             }
-                                            item.push(<th>{day.date}</th>);
+                                            item.push(<td key={index.toString() + week.week.toString() + day.day.toString()}>{day.date}</td>);
                                             return item;
                                         } else {
-                                            return <th>{day.date}</th>
+                                            return <td key={index.toString() + week.week.toString() + day.day.toString()}>{day.date}</td>
                                         }
                                     })
                                 }

@@ -2,7 +2,6 @@ import React from 'react'
 import {Menu} from 'antd'
 import 'antd/dist/antd.css'
 import { NavLink } from 'react-router-dom';
-
 class SideNav extends React.Component {
     constructor(){
         super();
@@ -20,7 +19,7 @@ class SideNav extends React.Component {
     }
     render() {
         return (
-            <div style={{height:"auto",width:"250px"}}>
+            <div style={{"height":"auto", "width":"100%"}}>
                 <Menu mode="inline" onClick={this.switchPage.bind(this)}>
                     <Menu.SubMenu title="Schedule" key="schedule">
                         <Menu.Item key="year">
@@ -51,6 +50,8 @@ class SideNav extends React.Component {
                         </NavLink>
                     </Menu.Item>
                 </Menu>     
+            
+            <i className="fa fa-angle-double-right"></i>
             </div>
             
         )

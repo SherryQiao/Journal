@@ -18,22 +18,20 @@ class Home extends React.Component {
     }
     render() {
         return (
-            <HashRouter>
-                <div style={{display: "flex"}}>
-
+        <HashRouter>
+            <div style={{"display":"flex", "height":"100%"}}>
+                <div style={{"display": "flex","width":"20%","padding": "20px"}}>
                     <SideNav switchPage={this.switchPage.bind(this)}></SideNav>
-
-                <div>
-
+                </div>
+                <div style={{"padding":"20px", "width":"80%"}}>
                     <Route exact path='/schedule/year' component={Year}></Route>
                     <Route exact path='/schedule/month' component={Month}></Route>
                     <Route exact path='/schedule/week' component={Week}></Route>
                     <Route exact path='/category' component={Category}></Route>
                     <Route exact path='/manage' component={Manage}></Route>
-
                 </div>
             </div>
-            </HashRouter>
+        </HashRouter>
            
             
         )
