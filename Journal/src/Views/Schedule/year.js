@@ -32,12 +32,15 @@ class Year extends React.Component {
         return calendarInfo;
     }
 
+    handleClick() {
+        console.log("clicked");
+    }
     render() {
         return (
             <div style={{"display":"flex", "flexWrap":"wrap", "height":"100%"}}>
                 {
                     Object.keys( this.state.CalendarInfo ).map( ( index ) => {
-                        return  <SingleMonthInYear key={index} month={this.state.CalendarInfo[index]} monthId={index}></SingleMonthInYear>
+                        return  <SingleMonthInYear key={index} month={this.state.CalendarInfo[index]} monthId={index} onClick={() => this.handleClick()}></SingleMonthInYear>
                     })
                 }
             </div>
