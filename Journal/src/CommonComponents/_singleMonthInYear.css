@@ -1,0 +1,19 @@
+.weekStyle {
+    padding-right: 15px;
+    text-align-last: center;
+}
+
+.weekTitleStyle {
+    text-align-last: center;
+}
+
+.dayStyle {
+    text-align-last: center;
+    width: 2em;
+}
+
+.dayStyle:hover {
+    text-align-last: center;
+    width: 2em;
+    background-color: aqua;
+}
