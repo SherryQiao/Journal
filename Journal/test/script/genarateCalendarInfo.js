@@ -63,7 +63,7 @@ function genarateDate ( year ) {
                 date: i, 
                 day: day,
                 dayCount: dayCount + 1, // start from day 1
-                isRestDay: (day === 6 || day === 0)? true : false
+                isHoliday: (day === 6 || day === 0)? true : false
             } )
         }
     });

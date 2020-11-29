@@ -5,7 +5,7 @@ import "./_singleMonthInYear.css"
 const SingleMonthInYear = ( props ) => {
 
     return (
-        <div style={{width: "25%", height:"20%","margin":"0 auto 0 auto","padding":"0 10px 0 10px"}}>
+        <div style={{width: "25%", height:"20%","margin":"0 auto 0 auto","padding":"5px 10px 5px 10px"}}>
             {Enum.MonthIdMap[props.monthId]}
             <table onClick={props.selectDateHandler.bind(null, props.monthId)}>
                 <tbody>
@@ -37,10 +37,10 @@ const SingleMonthInYear = ( props ) => {
                                                 }
                                             }
                                             
-                                            item.push(<td key={index.toString() + week.week.toString() + day.day.toString()} className="dayStyle">{day.date}</td>);
+                                            item.push(<td key={index.toString() + week.week.toString() + day.day.toString()} className={`dayStyle ${day.isHoliday? 'holidayStyle':''}`} day={day.day} date={day.date}>{day.date}</td>);
                                             return item;
                                         } else {
-                                            return <td key={index.toString() + week.week.toString() + day.day.toString()}  className="dayStyle">{day.date}</td>
+                                            return <td key={index.toString() + week.week.toString() + day.day.toString()}  className={`dayStyle ${day.isHoliday? 'holidayStyle':''}`} day={day.day} date={day.date}>{day.date}</td>
                                         }
                                     })
                                 }

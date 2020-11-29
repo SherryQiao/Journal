@@ -24,7 +24,9 @@
         "html-webpack-plugin": "4.5.0",
         "style-loader": "^2.0.0",
         "css-loader": "^5.0.1",
-        "font-awesome-icons": "1.6.0"
+        "@fortawesome/fontawesome-svg-core": "1.2.32",
+        "@fortawesome/free-solid-svg-icons": "5.15.1",
+        "@fortawesome/react-fontawesome": "0.1.13"
     },
     "scripts": {
         "start": "webpack-dev-server --mode development --open",
