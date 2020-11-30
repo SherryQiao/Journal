@@ -21,3 +21,7 @@
 .holidayStyle {
     color: red;
 }
+
+.daySelected {
+    background-color: aquamarine;
+}

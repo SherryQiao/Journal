@@ -37,10 +37,10 @@ const SingleMonthInYear = ( props ) => {
                                                 }
                                             }
                                             
-                                            item.push(<td key={index.toString() + week.week.toString() + day.day.toString()} className={`dayStyle ${day.isHoliday? 'holidayStyle':''}`} day={day.day} date={day.date}>{day.date}</td>);
+                                            item.push(<td key={index.toString() + week.week.toString() + day.day.toString()} className={`dayStyle ${day.isHoliday? 'holidayStyle':''} ${props.monthId === props.selectedDate.monthId && day.date === props.selectedDate.date? 'daySelected':''}`} day={day.day} date={day.date}>{day.date}</td>);
                                             return item;
                                         } else {
-                                            return <td key={index.toString() + week.week.toString() + day.day.toString()}  className={`dayStyle ${day.isHoliday? 'holidayStyle':''}`} day={day.day} date={day.date}>{day.date}</td>
+                                            return <td key={index.toString() + week.week.toString() + day.day.toString()}  className={`dayStyle  ${day.isHoliday? 'holidayStyle':''} ${props.monthId === props.selectedDate.monthId && day.date === props.selectedDate.date? 'daySelected':''}`} day={day.day} date={day.date}>{day.date}</td>
                                         }
                                     })
                                 }

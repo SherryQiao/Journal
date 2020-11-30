@@ -23,7 +23,7 @@ let Month = [
 
 let output = [];
 
-genarateDate(2020);
+genarateDate(2021);
 function isLeap ( year ) {
 // TODO: complete the function
 // 1. 能被 4 整除 且 不能被 100 整除
@@ -48,12 +48,10 @@ function genarateDate ( year ) {
             let dayCount = output.length,
                 day = (dayCount + dayInfo) % 7,
                 week = 0;
-            if( dayCount < 3 && ![1, 2, 3, 4].includes( day )) {
-                week = firstDayWeek.week;
-            } else if ( dayCount === 3 ) {
+            if ( dayCount === 3 ) {
                 week = 1;
             } else {
-                week = dayCount  ? ( day === 1? output[ dayCount - 1].week + 1 : output[ dayCount - 1].week) : 1;
+                week = dayCount > 3  ? ( day === 1? output[ dayCount - 1].week + 1 : output[ dayCount - 1].week) : 1;
             }
 
             output.push( { 
@@ -67,10 +65,22 @@ function genarateDate ( year ) {
             } )
         }
     });
+
+    let len = output.length;
+    if( [1,2,3].includes(output[len - 1].day)) {
+        for( let i = len - 3; i < len; i++) {
+                output[i].week = 1;
+                output[i].year ++;
+        }
+    }
+    for( let i = 0; i < 3; i++) {
+        if( ![1, 2, 3, 4].includes( output[i].day )) {
+            output[i].week = firstDayWeek.week;
+            output[i].year --;
+        }
+    }
     
     fs.writeFileSync("./test/mockCalendarDate_" + year + ".json", JSON.stringify( output ));
-    //let ws = fs.createWriteStream( "./test/mockCalendarDate_" + year + ".js" );
-    //ws.write( output );
 
 }
 
