@@ -6,24 +6,30 @@ import Month from '../Schedule/month'
 import Week from '../Schedule/week'
 import Category from '../Category/category'
 import Manage from '../ManagePage/manage'
-
+import './home.css'
 
 class Home extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = ({
+            isSideNavOpen: true
+        })
     }
 
-    switchPage(url) {
-        console.log(url)
+    collapse() {
+        this.setState({
+            isSideNavOpen: !this.state.isSideNavOpen
+        })
     }
+
     render() {
         return (
         <HashRouter>
-            <div style={{"display":"flex", "height":"100%"}}>
-                <div style={{"display": "flex","width":"20%","padding": "20px"}}>
-                    <SideNav switchPage={this.switchPage.bind(this)}></SideNav>
+            <div style={{"display":"flex", "height":"100%", "width":"112%"}}  className={this.state.isSideNavOpen?'show':'hide'}>
+                <div style={{"display": "flex","width":"15%","padding": "20px"}} >
+                    <SideNav collapse={this.collapse.bind(this)} isOpen={this.state.isSideNavOpen} style={{"width":"100%"}}></SideNav>
                 </div>
-                <div style={{"padding":"20px", "width":"80%"}}>
+                <div className={this.state.isSideNavOpen?'withSideNav':'fullScreen'}>
                     <Route exact path='/schedule/year' component={Year}></Route>
                     <Route exact path='/schedule/month' component={Month}></Route>
                     <Route exact path='/schedule/week' component={Week}></Route>
