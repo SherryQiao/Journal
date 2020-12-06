@@ -18,7 +18,7 @@
 
 .withSideNav {
     padding: 20px; 
-    width: 76%;
+    width: 70%;
     transition:width 2s;
     -moz-transition:width 2s; /* Firefox 4 */
     -webkit-transition:width 2s; /* Safari and Chrome */

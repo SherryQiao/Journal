@@ -1,17 +1,24 @@
 import React from 'react' 
 import SideNav from '../../CommonComponents/sideNav'
 import { BrowserRouter,Route,HashRouter } from 'react-router-dom'
-import Year from '../Schedule/year'
-import Month from '../Schedule/month'
-import Week from '../Schedule/week'
+import Schedule from "../Schedule/Schedule";
 import Category from '../Category/category'
 import Manage from '../ManagePage/manage'
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
+import { setSelectedDate } from "../../Services/store/action"
+
 import './home.css'
+
+const mapStateTpProps = (state) => {
+    return {selectedDate: state.selectedDate}
+}
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
+            selectedDate: props.selectedDate,
             isSideNavOpen: true
         })
     }
@@ -22,6 +29,8 @@ class Home extends React.Component {
         })
     }
 
+   
+
     render() {
         return (
         <HashRouter>
@@ -30,9 +39,7 @@ class Home extends React.Component {
                     <SideNav collapse={this.collapse.bind(this)} isOpen={this.state.isSideNavOpen} style={{"width":"100%"}}></SideNav>
                 </div>
                 <div className={this.state.isSideNavOpen?'withSideNav':'fullScreen'}>
-                    <Route exact path='/schedule/year' component={Year}></Route>
-                    <Route exact path='/schedule/month' component={Month}></Route>
-                    <Route exact path='/schedule/week' component={Week}></Route>
+                    <Route path='/schedule' component={Schedule}></Route>
                     <Route exact path='/category' component={Category}></Route>
                     <Route exact path='/manage' component={Manage}></Route>
                 </div>
@@ -44,4 +51,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home
+export default connect(mapStateTpProps)(Home)
