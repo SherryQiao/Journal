@@ -15,7 +15,6 @@ class Year extends React.Component {
         super(props);
         this.state = ({
             selectedDate: props.selectedDate,
-            currentYear: props.selectedDate.year,
             CalendarInfo: this.getCalendarInfo( props.selectedDate.year )
         })
     }
@@ -32,7 +31,7 @@ class Year extends React.Component {
     selectDateHandler(monthId, ev) {
         let target = ev.target;
         let date = {
-            year: this.state.currentYear,
+            year: this.state.selectedDate.year,
             monthId: monthId,
             day: parseInt(target.getAttribute("day")),
             date: parseInt(target.getAttribute("date"))
@@ -42,10 +41,23 @@ class Year extends React.Component {
             this.props.setSelectedDate(date)
         }
     }
+
+    getYear( args ) {
+        let currDate = this.props.selectedDate;
+        if(args === "previous") {
+            currDate.year--;
+        } else if(args === "next") {
+            currDate.year++;
+        }
+        
+        this.setState({
+            CalendarInfo:this.getCalendarInfo(currDate.year)
+        }, this.props.setSelectedDate(currDate))
+    }
     render() {
         return (
             <div style={{"height": "100%"}}>
-               <Header year={this.state.currentYear}></Header>
+               <Header year={this.state.selectedDate.year}></Header>
                 <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
                 {
                     Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
@@ -53,7 +65,7 @@ class Year extends React.Component {
                     })
                 }
                 </div>
-                {/* <Controller getYear={this.getYear.bind(this)}></Controller> */}
+                <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
             </div>
             
         )

@@ -14,7 +14,7 @@ class Schedule extends React.Component {
     }
     render(){
         return (
-            <div>
+            <div style={{ "display": "flex", "height": "100%" }}>
                 <div>
                     <HashRouter>
                         <Route exact path='/schedule/year' component={Year}></Route>
@@ -22,7 +22,7 @@ class Schedule extends React.Component {
                         <Route exact path='/schedule/week' component={Week}></Route>
                     </HashRouter>
                 </div>
-                <div>
+                <div style={{"width": "20%"}}>
                     <DayPreview></DayPreview>
                 </div>
             </div>
