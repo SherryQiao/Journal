@@ -7,6 +7,7 @@ import {setSelectedDate} from "../../Services/store/action"
 import { genarateData } from "../../Services/dateService"
 import { connect } from "react-redux"
 import { getYearCalendar } from "../../api"
+import SelectedDate from "../../Services/model/selectedDate"
 // TODO: Need to get data from server
 
 
@@ -14,7 +15,6 @@ class Year extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            selectedDate: props.selectedDate,
             CalendarInfo: this.getCalendarInfo( props.selectedDate.year )
         })
     }
@@ -30,12 +30,13 @@ class Year extends React.Component {
 
     selectDateHandler(monthId, ev) {
         let target = ev.target;
-        let date = {
-            year: this.state.selectedDate.year,
+        let date = new SelectedDate ({
+            year: this.props.selectedDate.year,
             monthId: monthId,
             day: parseInt(target.getAttribute("day")),
             date: parseInt(target.getAttribute("date"))
-        }
+        })
+            
 
         if( date.date ) {
             this.props.setSelectedDate(date)
@@ -43,21 +44,25 @@ class Year extends React.Component {
     }
 
     getYear( args ) {
+        // let currDate = this.props.selectedDate;
         let currDate = this.props.selectedDate;
         if(args === "previous") {
             currDate.year--;
         } else if(args === "next") {
             currDate.year++;
         }
-        
+
         this.setState({
             CalendarInfo:this.getCalendarInfo(currDate.year)
-        }, this.props.setSelectedDate(currDate))
+        }, ()=> {
+            currDate.day = document.getElementsByClassName("daySelected")[0].getAttribute("day");
+            this.props.setSelectedDate(new SelectedDate(currDate))
+        } );
     }
     render() {
         return (
             <div style={{"height": "100%"}}>
-               <Header year={this.state.selectedDate.year}></Header>
+               <Header year={this.state.CalendarInfo.year}></Header>
                 <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
                 {
                     Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {

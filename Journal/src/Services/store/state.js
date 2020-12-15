@@ -1,15 +1,7 @@
-function initialDate() {
-    let date = new Date();
-    return {
-        year: date.getFullYear(),
-        monthId: date.getMonth(),
-        day: date.getDay(),
-        date: date.getDate()
-    }
-}
+import SelectedDate from '../model/selectedDate'
 
 const defaultState = {
-    selectedDate: initialDate()
+    selectedDate: new SelectedDate()
 }
 
 export default defaultState
