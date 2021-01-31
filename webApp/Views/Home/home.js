@@ -1,7 +1,7 @@
 import React from 'react' 
 import SideNav from '../../CommonComponents/sideNav'
 import { BrowserRouter,Route,HashRouter } from 'react-router-dom'
-import Schedule from "../Schedule/Schedule";
+import Schedule from "../Schedule/schedule";
 import Category from '../Category/category'
 import Manage from '../ManagePage/manage'
 import {connect} from "react-redux"

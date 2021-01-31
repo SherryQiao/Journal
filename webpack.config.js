@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPulgin  = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        main: path.join(__dirname,'src/index.js')
+        main: path.join(__dirname,'webApp/index.js')
     },
     output: {
         path: path.join(__dirname,"dist"),
@@ -32,7 +32,7 @@ module.exports = {
         //new webpack.HotModuleReplacementPlugin(),
         // new CleanWebpackPlugin()
          new HtmlWebpackPulgin({
-             template: 'src/index.html'
+             template: 'webApp/index.html'
          })
     ],
     mode:'development'

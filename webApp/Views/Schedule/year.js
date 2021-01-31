@@ -15,17 +15,14 @@ class Year extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            CalendarInfo: this.getCalendarInfo( props.selectedDate.year )
+            CalendarInfo: undefined
         })
+        this.getYear();
     }
 
-    getCalendarInfo(year) {
-        // TODO: Get data from server to switch year
-        if( year ) {
-            return genarateData(getYearCalendar(year))
-        } else {
-            return genarateData(getYearCalendar(new Date().getFullYear()))
-       }
+    async getCalendarInfo(year) {
+        let currYear = year || new Date().getFullYear();
+        return await getYearCalendar(currYear);
     }
 
     selectDateHandler(monthId, ev) {
@@ -45,35 +42,46 @@ class Year extends React.Component {
 
     getYear( args ) {
         // let currDate = this.props.selectedDate;
-        let currDate = this.props.selectedDate;
+        let currDate = this.props.selectedDate || new SelectedDate();
         if(args === "previous") {
             currDate.year--;
         } else if(args === "next") {
             currDate.year++;
         }
 
-        this.setState({
-            CalendarInfo:this.getCalendarInfo(currDate.year)
-        }, ()=> {
-            currDate.day = document.getElementsByClassName("daySelected")[0].getAttribute("day");
-            this.props.setSelectedDate(new SelectedDate(currDate))
-        } );
+        this.getCalendarInfo( currDate.year).then(data => {
+            let calendar = genarateData(data);
+            this.setState(() => {
+                return {CalendarInfo:calendar}
+            }, ()=> {
+                currDate.day = document.getElementsByClassName("daySelected")[0].getAttribute("day");
+                this.props.setSelectedDate(new SelectedDate(currDate))
+            } )
+        });
+    }
+
+    genarateHTML( data ) { 
+        if( data ) {
+            return (<div style={{"height": "100%"}}>
+            <Header year={this.state.CalendarInfo.year}></Header>
+             <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
+             {
+                 Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
+                     return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)}></SingleMonthInYear>
+                 })
+             }
+             </div>
+             <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
+         </div>)
+            
+        } else {
+            return <h1> Please wait</h1>
+        }
+
     }
     render() {
-        return (
-            <div style={{"height": "100%"}}>
-               <Header year={this.state.CalendarInfo.year}></Header>
-                <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
-                {
-                    Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
-                        return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)}></SingleMonthInYear>
-                    })
-                }
-                </div>
-                <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
-            </div>
-            
-        )
+        return (this.genarateHTML(this.state.CalendarInfo))
+        
     }
 }
 
