@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 export const getYearCalendar = ( year ) => {
-    return axios.get('http://localhost:8080/api/getYearCalendar',{
+    return axios.get(`http://localhost:${process.env.PORT}/api/getYearCalendar`,{
         params:{
             year:year
         }

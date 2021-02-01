@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var ejs = require('ejs');
 var fs = require('fs');
+var dotEnv = require('dotenv')
+
+dotEnv.config()
 // var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 
@@ -49,6 +52,6 @@ app.get('/api/getYearCalendar',(req, res) => {
 //   res.render('error');
 // });
 
-app.listen(8080, ()=> {
+app.listen(process.env.PORT, ()=> {
     console.log("server start")
 })

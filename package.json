@@ -30,10 +30,12 @@
         "@fortawesome/fontawesome-svg-core": "1.2.32",
         "@fortawesome/free-solid-svg-icons": "5.15.1",
         "@fortawesome/react-fontawesome": "0.1.13",
-        "redux": "4.0.5"
+        "redux": "4.0.5",
+        "dotenv": "8.2.0",
+        "dotenv-webpack": "6.0.0"
     },
     "scripts": {
-        "start": "server.js",
+        "start": "node server.js",
         "build": "webpack --config ./webpack.config.js"
     }
 }
