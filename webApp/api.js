@@ -2,12 +2,21 @@
 
 import axios from 'axios'
 
+const PORT = process.env.PORT;
+
 export const getYearCalendar = ( year ) => {
-    return axios.get(`http://localhost:${process.env.PORT}/api/getYearCalendar`,{
+    return axios.get(`http://localhost:${PORT}/api/getYearCalendar`,{
         params:{
             year:year
         }
-    }).then(res => {
-        return res.data;
+    })
+}
+
+export const getDayPreviewList = ( data ) => {
+    let date = `${data.year}-${data.monthId}-${data.date}`
+    return axios.get(`http://localhost:${PORT}/api/getDayPreviewList`, {
+        params: {
+            date: date
+        }
     })
 }

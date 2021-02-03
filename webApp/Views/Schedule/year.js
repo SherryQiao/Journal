@@ -20,9 +20,9 @@ class Year extends React.Component {
         this.getYear();
     }
 
-    async getCalendarInfo(year) {
+    getCalendarInfo(year) {
         let currYear = year || new Date().getFullYear();
-        return await getYearCalendar(currYear);
+        return  getYearCalendar(currYear);
     }
 
     selectDateHandler(monthId, ev) {
@@ -33,10 +33,9 @@ class Year extends React.Component {
             day: parseInt(target.getAttribute("day")),
             date: parseInt(target.getAttribute("date"))
         })
-            
 
         if( date.date ) {
-            this.props.setSelectedDate(date)
+            this.props.setSelectedDate(date);
         }
     }
 
@@ -49,8 +48,8 @@ class Year extends React.Component {
             currDate.year++;
         }
 
-        this.getCalendarInfo( currDate.year).then(data => {
-            let calendar = genarateData(data);
+        this.getCalendarInfo( currDate.year).then(res => {
+            let calendar = genarateData(res.data);
             this.setState(() => {
                 return {CalendarInfo:calendar}
             }, ()=> {
@@ -74,10 +73,8 @@ class Year extends React.Component {
              <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
          </div>)
             
-        } else {
-            return <h1> Please wait</h1>
-        }
-
+        } 
+        return null
     }
     render() {
         return (this.genarateHTML(this.state.CalendarInfo))

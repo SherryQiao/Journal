@@ -1,11 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var ejs = require('ejs');
-var fs = require('fs');
-var dotEnv = require('dotenv')
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const ejs = require('ejs');
+const fs = require('fs');
+const dotenv = require('dotenv')
 
-dotEnv.config()
+dotenv.config()
 // var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 
@@ -34,6 +34,10 @@ app.get('/api/getYearCalendar',(req, res) => {
         res.send(data);
     })
     
+})
+
+app.get('/api/getDayPreviewList',(req, res) => {
+   res.send([{time:"1", action:"aaa"},{time:"2", action:"bbb"}])
 })
 
 // catch 404 and forward to error handler
