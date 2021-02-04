@@ -3,7 +3,8 @@ import { BrowserRouter,Route,HashRouter } from 'react-router-dom'
 import Year from '../Schedule/year'
 import Month from '../Schedule/month'
 import Week from '../Schedule/week'
-import DayPreview from '../Schedule/dayPreview'
+import Day from '../Schedule/day'
+
 
 class Schedule extends React.Component {
     constructor( props ) {
@@ -14,20 +15,12 @@ class Schedule extends React.Component {
     }
     render(){
         return (
-            <div style={{ "display": "flex", "height": "100%" }}>
-                <div>
-                    <HashRouter>
-                        <Route exact path='/schedule/year' component={Year}></Route>
-                        <Route exact path='/schedule/month' component={Month}></Route>
-                        <Route exact path='/schedule/week' component={Week}></Route>
-                    </HashRouter>
-                </div>
-                <div style={{"width": "20%"}}>
-                    <DayPreview></DayPreview>
-                </div>
-            </div>
-
-            
+            <HashRouter>
+                <Route exact path='/schedule/' component={Day}></Route>
+                <Route exact path='/schedule/year' component={Year}></Route>
+                <Route exact path='/schedule/month' component={Month}></Route>
+                <Route exact path='/schedule/week' component={Week}></Route>
+            </HashRouter>
         )
     }
 }

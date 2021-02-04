@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from "react-redux"
 import store from "../../Services/store/store"
 import { getDayPreviewList } from "../../api.js"
+import  Enum from '../../Services/enums'
 
 class DayPreview extends React.Component {
     constructor(props) {
@@ -20,7 +21,16 @@ class DayPreview extends React.Component {
 
     genarateHtml() {
         if(this.state.dayPreviewList) {
-            return (<div>{this.state.dayPreviewList[0].time}</div>)
+            return (
+                this.state.dayPreviewList.map(item => {
+                    return (
+                        <div>
+                            <h2>{item['task']}</h2>
+                            <div><b>Time: </b>{item['startTime']} - {item['endTime']}</div>
+                            <div><b>Location: </b>{item['location']}</div>
+                        </div>
+                    )})
+            )
         }
         return null
     }
@@ -28,11 +38,7 @@ class DayPreview extends React.Component {
     render( ) { 
         return (
             <div>
-                <div>date</div>
-                <div>{this.props.selectedDate.year}</div>
-                <div>{this.props.selectedDate.monthId}</div>
-                <div>{this.props.selectedDate.day}</div>
-                <div>{this.props.selectedDate.date}</div>
+                <h1>{Enum.MonthIdMap[this.props.selectedDate.monthId]}  {this.props.selectedDate.date}</h1>
                 {
                     this.genarateHtml()
                 }

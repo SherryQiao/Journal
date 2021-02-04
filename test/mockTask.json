@@ -1,0 +1,21 @@
+[{
+        "date":"2021-2-5",
+        "startTime": "14:00:00",
+        "endTime": "16:00:00",
+        "task": "dance",
+        "location": "BalletTalk",
+        "level": "Beginner",
+        "teacher": "Jeremiah Zeng",
+        "Note": null
+    },
+    {
+        "date":"2021-2-5",
+        "startTime": "16:15:00",
+        "endTime": "18:15:00",
+        "task": "dance",
+        "location": "BalletTalk",
+        "level": "Grade One",
+        "teacher": "Jack Zhou",
+        "Note": null
+    }
+]

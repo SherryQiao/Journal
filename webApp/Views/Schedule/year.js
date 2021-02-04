@@ -7,6 +7,7 @@ import {setSelectedDate} from "../../Services/store/action"
 import { genarateData } from "../../Services/dateService"
 import { connect } from "react-redux"
 import { getYearCalendar } from "../../api"
+import DayPreview from '../Schedule/dayPreview'
 import SelectedDate from "../../Services/model/selectedDate"
 // TODO: Need to get data from server
 
@@ -61,17 +62,25 @@ class Year extends React.Component {
 
     genarateHTML( data ) { 
         if( data ) {
-            return (<div style={{"height": "100%"}}>
-            <Header year={this.state.CalendarInfo.year}></Header>
-             <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
-             {
-                 Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
-                     return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)}></SingleMonthInYear>
-                 })
-             }
-             </div>
-             <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
-         </div>)
+            return (
+            <div style={{"height": "100%", "display":"flex"}}>
+                <div style={{"height": "100%", "width": "80%"}}>
+                    <Header year={this.state.CalendarInfo.year}></Header>
+                    <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
+                        {
+                            Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
+                                return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)}></SingleMonthInYear>
+                            })
+                        }
+                    </div>
+                    <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
+                </div>
+         
+                <div style={{"width": "20%"}}>
+                    <DayPreview></DayPreview>
+                </div>
+                
+            </div>)
             
         } 
         return null

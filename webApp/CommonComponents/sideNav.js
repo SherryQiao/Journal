@@ -38,13 +38,17 @@ class SideNav extends React.Component {
                                 </NavLink>
                             </Menu.Item>
                         </Menu.SubMenu>
-                        <Menu.SubMenu title="Category" key="category">
-                        <Menu.Item key="All">
-                            <NavLink exact to="/category">
-                                <span>All</span>
+
+                        <Menu.Item key="backlog">
+                            <NavLink exact to="/backlog">
+                                <span>Backlog</span>
                             </NavLink>
                         </Menu.Item>
-                        </Menu.SubMenu>
+                        <Menu.Item key="category">
+                            <NavLink exact to="/category">
+                                <span>Category</span>
+                            </NavLink>
+                        </Menu.Item>
                         <Menu.Item> 
                             <NavLink exact to="/manage">
                                 <span>Manage</span>

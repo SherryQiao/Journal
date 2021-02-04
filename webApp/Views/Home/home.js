@@ -1,12 +1,11 @@
 import React from 'react' 
 import SideNav from '../../CommonComponents/sideNav'
-import { BrowserRouter,Route,HashRouter } from 'react-router-dom'
+import { Route,HashRouter } from 'react-router-dom'
 import Schedule from "../Schedule/schedule";
 import Category from '../Category/category'
+import Backlog from '../Backlog/backlog'
 import Manage from '../ManagePage/manage'
 import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
-import { setSelectedDate } from "../../Services/store/action"
 
 import './home.css'
 
@@ -40,6 +39,7 @@ class Home extends React.Component {
                 </div>
                 <div className={this.state.isSideNavOpen?'withSideNav':'fullScreen'}>
                     <Route path='/schedule' component={Schedule}></Route>
+                    <Route exact path='/backlog' component={Backlog}></Route>
                     <Route exact path='/category' component={Category}></Route>
                     <Route exact path='/manage' component={Manage}></Route>
                 </div>

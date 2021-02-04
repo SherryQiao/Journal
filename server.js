@@ -29,15 +29,17 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', indexRouter);
 
 
-app.get('/api/getYearCalendar',(req, res) => {
-    fs.readFile('public/static/calendarDate_' + req.query.year + '.json', (err,data) => {
+app.get('/api/getYearCalendar', (req, res) => {
+    fs.readFile('public/static/calendarDate_' + req.query.year + '.json', (err, data) => {
         res.send(data);
     })
-    
+
 })
 
-app.get('/api/getDayPreviewList',(req, res) => {
-   res.send([{time:"1", action:"aaa"},{time:"2", action:"bbb"}])
+app.get('/api/getDayPreviewList', (req, res) => {
+    fs.readFile('test/mockTask.json', (err, data) => {
+        res.send(data);
+    })
 })
 
 // catch 404 and forward to error handler
@@ -56,6 +58,6 @@ app.get('/api/getDayPreviewList',(req, res) => {
 //   res.render('error');
 // });
 
-app.listen(process.env.PORT, ()=> {
+app.listen(process.env.PORT, () => {
     console.log("server start")
 })
