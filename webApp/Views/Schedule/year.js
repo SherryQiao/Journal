@@ -16,7 +16,8 @@ class Year extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            CalendarInfo: undefined
+            CalendarInfo: undefined,
+            PreivewWindow: false
         })
         this.getYear();
     }
@@ -37,7 +38,13 @@ class Year extends React.Component {
 
         if( date.date ) {
             this.props.setSelectedDate(date);
+            this.dayPreview.open();
+            this.setState(()=> {
+                return {PreivewWindow: true}
+            })
         }
+
+        
     }
 
     getYear( args ) {
@@ -60,24 +67,30 @@ class Year extends React.Component {
         });
     }
 
+    closePreview() {
+        this.setState(()=> {
+            return {PreivewWindow: false}
+        })
+    }
+
     genarateHTML( data ) { 
         if( data ) {
             return (
             <div style={{"height": "100%", "display":"flex"}}>
-                <div style={{"height": "100%", "width": "80%"}}>
+                <div style={{"height": "100%", "width": this.state.PreivewWindow? "80%" : "100%"}}>
                     <Header year={this.state.CalendarInfo.year}></Header>
                     <div style={{"display":"flex", "flexWrap":"wrap", "height":"90%", "padding":"10px 0 10px 0"}}>
                         {
                             Object.keys( this.state.CalendarInfo.month ).map( ( item, index ) => {
-                                return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)}></SingleMonthInYear>
+                                return  <SingleMonthInYear key={index} month={this.state.CalendarInfo.month[index]} monthId={index} selectedDate={this.props.selectedDate} selectDateHandler={this.selectDateHandler.bind(this)} onClick={this.showPreview}></SingleMonthInYear>
                             })
                         }
                     </div>
                     <Controller previousAction={this.getYear.bind(this)} nextAction={this.getYear.bind(this)}></Controller>
                 </div>
          
-                <div style={{"width": "20%"}}>
-                    <DayPreview></DayPreview>
+                <div className={this.state.PreivewWindow? ".displayShow": ".displayNone"}>
+                    <DayPreview ref={dayPreview => this.dayPreview = dayPreview} onClose={this.closePreview.bind(this)}></DayPreview>
                 </div>
                 
             </div>)
